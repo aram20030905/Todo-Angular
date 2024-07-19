@@ -17,7 +17,16 @@ todos : ToDo[]= [];
   constructor(private todoService:TodoService) {
   }
   ngOnInit(){
-this.todos=this.todoService.getAll()
+this.fetchTodos()
+  }
+  onAdd(value:string){
+    const todo=new ToDo("-1", value,false)
+    console.log(todo)
+   const newTodo= this.todoService.create(todo)
+    this.todos.push(newTodo)
+  }
+  fetchTodos(){
+    this.todos=this.todoService.getAll()
   }
 }
 

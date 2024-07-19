@@ -7,6 +7,13 @@ import {ToDo} from "../models/todo";
 export class TodoService {
   todos=[new ToDo("1","Go To Gym",false)]
 getAll(){
-    return this.todos
+    return [...this.todos]
+}
+create(todo:ToDo): ToDo{
+
+const id=new Date().getTime().toString()
+  const updatedTodo={...todo,id:id}
+  this.todos.push(updatedTodo)
+  return updatedTodo
 }
 }

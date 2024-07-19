@@ -1,14 +1,19 @@
 <div class="container-sm border border-secondary-subtle mt-4 p-4">
   <div class="input-group mb-3 ">
-    <input type="text" class="form-control" placeholder="Add ToDo" aria-label="Recipient's username" aria-describedby="button-addon2">
-    <button class="btn btn-outline-secondary" type="button" id="button-addon2">Add</button>
-  </div>
+    <input #inputElement type="text" class="form-control" placeholder="Add ToDo" aria-label="Recipient's username" aria-describedby="button-addon2">
+    <button (click)="onAdd(inputElement.value)" class="btn btn-outline-secondary" type="button" id="button-addon2">Add</button>
+  </div >
   <h5>Todo item</h5>
+
   <ul class="list-group">
     <li *ngFor="let todo of todos" class="list-group-item">
       <input class="form-check-input me-2" type="checkbox" value="" aria-label="...">
     {{todo.title}}
     </li>
 
+
+
   </ul>
-</div>
+
+  </div>
+
