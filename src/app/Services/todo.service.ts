@@ -16,4 +16,14 @@ const id=new Date().getTime().toString()
   this.todos.push(updatedTodo)
   return updatedTodo
 }
+delete(id:string): string| boolean{
+   const index= this.todos.findIndex(value=>value.id === id);
+   const toDelete=this.todos[index]
+
+   this.todos.splice(index,1)
+  return toDelete.id
+}
+// update(Todo):Todo{
+//
+// }
 }
