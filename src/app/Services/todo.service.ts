@@ -23,7 +23,12 @@ delete(id:string): string| boolean{
    this.todos.splice(index,1)
   return toDelete.id
 }
-// update(Todo):Todo{
-//
-// }
+
+  update(todo: ToDo) {
+    const index= this.todos.findIndex(value=>value.id === todo.id);
+  this.todos[index]={...todo}
+    return this.todos[index]
+
+
+  }
 }

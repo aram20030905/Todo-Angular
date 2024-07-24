@@ -12,13 +12,23 @@
     <li *ngFor="let todo of todos" class="list-group-item d-flex justify-content-between">
       <div>
         <input class="form-check-input me-2" type="checkbox" value="" aria-label="...">
-        <input class="form-check-label" [readOnly]="!todo.isEditing" [value]="todo.title"/>
+        <input class="form-check-label"
+               #todoTitleInput
+               [ngClass]="{'todo-title--readonly': !todo.isEditing}"
+               [readOnly]="!todo.isEditing"
+               [value]="todo.title"/>
       </div>
 
-      <div>
-        <i class="bi bi-pencil me-2"></i>
-        <i class="bi bi-trash" (click)="onDelete(todo.id)"></i>
+      <div *ngIf="!todo.isEditing" class="action-container">
+        <i class="bi bi-pencil me-2 edit-icon" (click)="onEdit(todo)"></i>
+        <i class="bi bi-trash delete-icon" (click)="onDelete(todo.id)"></i>
       </div>
+
+      <div *ngIf="todo.isEditing" >
+        <i class="bi bi-x cancel-icon " (click)="onCancel(todo)"></i>
+        <i class="bi bi-box-arrow-down save-icon " (click)="onSave(todo,todoTitleInput.value)"></i>
+      </div>
+
 
     </li>
 
