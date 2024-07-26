@@ -1,20 +1,29 @@
+
 <div class="container-sm border border-secondary-subtle mt-4 p-4">
   <div class="input-group mb-3 ">
     <input #inputElement type="text" class="form-control" placeholder="Add ToDo" aria-label="Recipient's username"
-           aria-describedby="button-addon2">
-    <button (click)="onAdd(inputElement.value)" class="btn btn-outline-secondary" type="button" id="button-addon2">Add
+           aria-describedby="button-addon2" (keyup.enter)="onAdd(inputElement)"  >
+    <button (click)="onAdd(inputElement)" class="btn btn-outline-secondary" type="button" id="button-addon2">Add
     </button>
   </div>
   <h5>Todo item</h5>
 
-  <ul class="list-group">
+  <ul class="list-group todo-items__container">
+    <button class="a8" (click)="onAllDelete()">Delete All</button>
 
-    <li *ngFor="let todo of todos" class="list-group-item d-flex justify-content-between">
-      <div>
-        <input class="form-check-input me-2" type="checkbox" value="" aria-label="...">
-        <input class="form-check-label"
+    <li *ngFor="let todo of todos"
+        [ngClass]="{
+                      'todo-title--readonly': !todo.isEditing,
+                              'green':todo.done
+                                     }"
+
+
+        class="list-group-item d-flex justify-content-between">
+      <div class="w-75">
+        <input class="form-check-input me-2 " type="checkbox" [(ngModel)]="todo.done" (ngModelChange)="onDoneChange(todo)" value="" aria-label="...">
+        <input class="form-check-label w-75 a5"
                #todoTitleInput
-               [ngClass]="{'todo-title--readonly': !todo.isEditing}"
+               [ngClass]="{'todo-title--readonly': !todo.isEditing, 'green':todo.done}"
                [readOnly]="!todo.isEditing"
                [value]="todo.title"/>
       </div>
@@ -34,7 +43,9 @@
 
 
   </ul>
+
 </div>
+
 
 
 

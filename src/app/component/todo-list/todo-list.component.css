@@ -2,3 +2,19 @@
   border:none;
   outline: none;
 }
+
+.todo-items__container{
+  max-height:calc(100vh - 230px);
+  overflow: auto;
+}
+.green{
+  background-color: green;
+}
+.a8{
+  width:150px;
+border-radius: 20px;
+  background-color: red;
+  font-size:20px;
+
+}
+

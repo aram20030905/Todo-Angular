@@ -17,26 +17,29 @@ import {FormsModule} from "@angular/forms";
   styleUrl: './todo-list.component.css'
 })
 export class TodoListComponent {
-todos : ToDo[]= [];
-  isGoing=false;
-  constructor(private todoService:TodoService) {
+  todos: ToDo[] = [];
+  isGoing = false;
+
+  constructor(private todoService: TodoService) {
   }
-  ngOnInit(){
-this.fetchTodos()
+
+  ngOnInit() {
+    this.fetchTodos()
   }
-  onAdd(inputElement:HTMLInputElement){
-    if(!inputElement.value){
+
+  onAdd(inputElement: HTMLInputElement) {
+    if (!inputElement.value) {
 
       return
     }
-    const todo=new ToDo("-1", inputElement.value,false)
+    const todo = new ToDo("-1", inputElement.value, false)
     console.log(todo)
-   const newTodo= this.todoService.create(todo)
+    const newTodo = this.todoService.create(todo)
     this.todos.unshift(newTodo)
-    inputElement.value=""
+    inputElement.value = ""
   }
 
-  onDelete(id:string) {
+  onDelete(id: string) {
     if (confirm("Are you sure you want to delete it?")) {
       const deleteId = this.todoService.delete(id)
       if (deleteId) {
@@ -46,46 +49,61 @@ this.fetchTodos()
     }
   }
 
-  fetchTodos(){
-    this.todos=this.todoService.getAll()
+  fetchTodos() {
+    this.todos = this.todoService.getAll()
   }
 
-  onEdit(toEdit:ToDo) {
+  onEdit(toEdit: ToDo) {
 
-    if(!this.isGoing) {
+    if (!this.isGoing) {
       toEdit.isEditing = true;
     }
-    this.isGoing=true
-  }
-  private findById(id:string):ToDo | undefined{
-    return this.todos.find(todo=>todo.id===id)
+    this.isGoing = true
   }
 
-  onCancel(todo:ToDo) {
-    todo.isEditing=false
-    const index= this.todos.findIndex(value => value.id === todo.id)
-    this.todos[index]={...this.todos[index]}
-    this.isGoing=false
+  private findById(id: string): ToDo | undefined {
+    return this.todos.find(todo => todo.id === id)
   }
 
-  onDoneChange(todo:ToDo){
+  onCancel(todo: ToDo) {
+    todo.isEditing = false
+    const index = this.todos.findIndex(value => value.id === todo.id)
+    this.todos[index] = {...this.todos[index]}
+    this.isGoing = false
+  }
+
+  onDoneChange(todo: ToDo) {
     this.updateTodo(todo)
   }
-  onSave(todo: ToDo, title:string) {
-    todo.title=title;
-    todo.isEditing=false
+
+  onSave(todo: ToDo, title: string) {
+    todo.title = title;
+    todo.isEditing = false
     this.updateTodo(todo)
-    this.isGoing=false
+    this.isGoing = false
 
 
   }
-  private updateTodo(todo:ToDo){
-    const updatedTodo= this.todoService.update(todo)
-    if (updatedTodo){
-      const index= this.todos.findIndex(value => value.id === updatedTodo.id)
-      this.todos[index]={...updatedTodo}
+
+  private updateTodo(todo: ToDo) {
+    const updatedTodo = this.todoService.update(todo)
+    if (updatedTodo) {
+      const index = this.todos.findIndex(value => value.id === updatedTodo.id)
+      this.todos[index] = {...updatedTodo}
     }
 
+  }
+
+  onAllDelete() {
+    if(this.todos.length===0){
+      return;
+    }
+    if (confirm("Are you sure you want to delete it?")) {
+    this.todos=[]
+      this.todoService.allDelete()
+
+
+    }
   }
 }
 
